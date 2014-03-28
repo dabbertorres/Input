@@ -5,7 +5,7 @@ A C++11 input manager for SFML.
 
 Pretty simple to use, and header-only, so nice and easy to include in a project.
 
-Here's an example:
+#Example:
 ```c++
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -58,3 +58,5 @@ int main(int argc, char** argv)
 }
 ```
 
+#License
+MIT License
