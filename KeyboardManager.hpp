@@ -26,7 +26,7 @@ namespace swift
 				for(auto &k : bindings)
 				{
 					if(k.second(e))
-						return k.second(e);
+						return k.second.call();
 				}
 				
 				return false;
@@ -60,21 +60,20 @@ namespace swift
 							{
 								if(e.type == sf::Event::KeyPressed)
 								{
-									return this->call();
+									return true;
 								}
 							}
 							else
 							{
 								if(e.type == sf::Event::KeyReleased)
 								{
-									return this->call();
+									return true;
 								}
 							}
 						}
 						return false;
 					}
-
-				private:
+					
 					bool call()
 					{
 						if(!func)
@@ -85,6 +84,7 @@ namespace swift
 						return true;
 					}
 
+				private:
 					sf::Keyboard::Key key;
 
 					std::function<void()> func;
