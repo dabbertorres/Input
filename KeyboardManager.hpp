@@ -20,6 +20,11 @@ namespace swift
 			{
 				bindings.emplace(std::make_pair(n, KeyBinding(k, f, onPress)));
 			}
+			
+			void call(const std::string& k)
+			{
+				bindings.at(k).call();
+			}
 
 			bool operator()(sf::Event& e)
 			{
@@ -54,24 +59,7 @@ namespace swift
 
 					bool operator()(sf::Event& e)
 					{
-						if(e.key.code == key)
-						{
-							if(onPress)
-							{
-								if(e.type == sf::Event::KeyPressed)
-								{
-									return true;
-								}
-							}
-							else
-							{
-								if(e.type == sf::Event::KeyReleased)
-								{
-									return true;
-								}
-							}
-						}
-						return false;
+						return ((e.type == sf::Event::KeyPressed && onPress) || (e.type == sf::Event::KeyReleased && !onPress)) && e.key.code == key;
 					}
 					
 					bool call()
