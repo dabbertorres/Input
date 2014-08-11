@@ -27,13 +27,18 @@ namespace swift
 			{
 				bindings.emplace(std::make_pair(n, ButtonBinding(b, f, onPress)));
 			}
+			
+			void call(const std::string& k)
+			{
+				bindings.at(k).call();
+			}
 
 			bool operator()(sf::Event& e)
 			{
 				for(auto &b : bindings)
 				{
 					if(b.second(e))
-						return b.second(e);
+						return b.second.call();
 				}
 				
 				return false;
@@ -61,27 +66,9 @@ namespace swift
 
 					bool operator()(sf::Event& e)
 					{
-						if(e.mouseButton.button == button)
-						{
-							if(onPress)
-							{
-								if(e.type == sf::Event::MouseButtonPressed)
-								{
-									return this->call();
-								}
-							}
-							else
-							{
-								if(e.type == sf::Event::MouseButtonReleased)
-								{
-									return this->call();
-								}
-							}
-						}
-						return false;
+						return ((e.type == sf::Event::MouseButtonPressed && onPress) || (e.type == sf::Event::MouseButtonReleased && !onPress)) && e.mouseButton.button == button;
 					}
 
-				private:
 					bool call()
 					{
 						if(!func)
@@ -92,6 +79,7 @@ namespace swift
 						return true;
 					}
 
+				private:
 					sf::Mouse::Button button;
 
 					std::function<void()> func;
