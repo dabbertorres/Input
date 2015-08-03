@@ -17,17 +17,17 @@ namespace swift
 	class Binding
 	{
 #if !defined _MSC_VER || _MSC_VER >= 1900
-		constexpr sf::Event::EventType EventRelease = std::is_same<T, sf::Mouse::Button>::value ? sf::Event::MouseButtonReleased : sf::Event::KeyReleased;
-		constexpr sf::Event::EventType EventPress = std::is_same<T, sf::Mouse::Button>::value ? sf::Event::MouseButtonPressed : sf::Event::KeyPressed;
+		static constexpr sf::Event::EventType EventRelease = std::is_same<T, sf::Mouse::Button>::value ? sf::Event::MouseButtonReleased : sf::Event::KeyReleased;
+		static constexpr sf::Event::EventType EventPress = std::is_same<T, sf::Mouse::Button>::value ? sf::Event::MouseButtonPressed : sf::Event::KeyPressed;
 #else
-		const sf::Event::EventType EventRelease = std::is_same<T, sf::Mouse::Button>::value ? sf::Event::MouseButtonReleased : sf::Event::KeyReleased;
-		const sf::Event::EventType EventPress = std::is_same<T, sf::Mouse::Button>::value ? sf::Event::MouseButtonPressed : sf::Event::KeyPressed;
+		static const sf::Event::EventType EventRelease = std::is_same<T, sf::Mouse::Button>::value ? sf::Event::MouseButtonReleased : sf::Event::KeyReleased;
+		static const sf::Event::EventType EventPress = std::is_same<T, sf::Mouse::Button>::value ? sf::Event::MouseButtonPressed : sf::Event::KeyPressed;
 #endif
 		public:
 			using Callback = std::function<void(const sf::Time&)>;
 
-			explicit Binding(T i, const Callback& c, bool p = false)
-			:	input(i),
+			explicit Binding(T in, const Callback& c, bool p = false)
+			:	input(in),
 				callback(c),
 				onPress(p)
 			{}
