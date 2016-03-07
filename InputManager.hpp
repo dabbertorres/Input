@@ -20,7 +20,7 @@ namespace swift
 
 			void add(T input, const typename BindingType::Callback& f, bool onPress = false)
 			{
-				bindings.emplace_back(std::forward<T, const typename BindingType::Callback&, bool>(input, f, onPress));
+				bindings.emplace_back(input, f, onPress);
 			}
 
 			void operator()(const sf::Event& e)
