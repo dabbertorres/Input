@@ -10,24 +10,23 @@ Pretty simple to use, and header-only, so nice and easy to include in a project.
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-#include "KeyboardManager.hpp"
-#include "MouseManager.hpp"
+#include "InputManager.hpp"
 
 int main(int argc, char** argv)
 {
-    sf::Window window(sf::VideoMode(800, 600, 32), "SFML");
-    
-    swift::KeyboardManager keyboard;
-    swift::MouseManager mouse;
-    
-    keyboard.newBinding("exit", sf::Keyboard::Escape, [&window]()
+	sf::Window window(sf::VideoMode(800, 600, 32), "SFML");
+	
+	swift::InputManager<sf::Keyboard::Key> keyboard;
+	swift::InputManager<sf::Mouse::Button> mouse;
+	
+	keyboard.add(sf::Keyboard::Escape, [&window]()
 	{
 		window.close();
 	});
 	
-	mouse.newBinding("exit", sf::Mouse::Right, [&window]()
+	mouse.add(sf::Mouse::Right, [&window]()
 	{
-	    window.close();
+		window.close();
 	});
 	
 	while(window.isOpen())
@@ -50,7 +49,6 @@ int main(int argc, char** argv)
 		}
 
 		window.clear();
-
 		window.display();
 	}
 	
